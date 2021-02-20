@@ -1,6 +1,6 @@
 {
 	"name": "elorla",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"private": true,
 	"scripts": {
 		"version:patch": "npm version patch -m \"Upgrade to %s\"",
@@ -11,6 +11,7 @@
 		"start": "react-native start",
 		"test": "jest",
 		"lint": "eslint .",
+		"lint2": "eslint *.js **/*.js src/**/*.js",
 		"ios": "react-native run-ios",
 		"build:ios": "react-native bundle --minify --entry-file index.ios.js --platform ios --dev false --bundle-output ./ios/main.jsbundle --assets-dest ./ios"
 	},
@@ -31,9 +32,10 @@
 		"react-native-screens": "~2.2.0",
 		"react-native-simple-toast": "^1.1.2",
 		"react-native-snap-carousel": "^3.9.1",
+		"react-native-tts": "^3.2.0",
 		"react-native-vector-icons": "^6.6.0",
 		"react-native-web": "~0.11.7",
-		"react-native-webview": "^10.10.0",
+		"react-native-webview": "11.2.3",
 		"react-native-windows": "^0.63.5",
 		"react-redux": "^7.2.0",
 		"realm": "6.1.0",
@@ -46,7 +48,12 @@
 		"@babel/runtime": "7.10.1",
 		"@react-native-community/eslint-config": "0.0.5",
 		"babel-jest": "24.9.0",
-		"eslint": "6.8.0",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb": "^18.2.1",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-jsx-a11y": "^6.4.1",
+		"eslint-plugin-react": "^7.22.0",
+		"eslint-plugin-react-hooks": "^4.2.0",
 		"jest": "24.9.0",
 		"metro-react-native-babel-preset": "0.58.0",
 		"react-test-renderer": "16.11.0"
