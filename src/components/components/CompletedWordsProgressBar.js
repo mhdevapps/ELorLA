@@ -4,7 +4,7 @@ import { getAllWords } from "../../db/services/wordsServices";
 import { useTheme } from "../../themes/ThemeProvider";
 
 const FilterProgress = () => {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const allWords = getAllWords();
   const completed = allWords.filter(word => word.memorized).length;
   const percentage = completed / allWords.length;
@@ -19,11 +19,11 @@ const FilterProgress = () => {
     >
       <View style={{ width: "100%" }}>
         <Text style={{ color: colors.text }}>
-          {completed}/{allWords.length} completed
+          {`${completed}/${allWords.length} completed`}
         </Text>
         <View
           style={{
-            backgroundColor: "gray",
+            backgroundColor: colors.gray,
             width: "100%",
             height: 4,
             borderRadius: 100

@@ -1,16 +1,11 @@
 // This is an example code for React Native Floating Action Button//
-import React, { Component } from "react";
+import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import * as Animatable from "react-native-animatable";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../../themes/colours";
 
-import { StyleSheet, View, Image, TouchableOpacity, Alert, Text } from "react-native";
 // import all the components we are going to use.
-
-const clickHandler = () => {
-  // function to handle click on floating Action Button
-  this.props.navigation.navigate("Create word");
-};
 
 const floatingIcon = props => {
   return (
@@ -19,7 +14,9 @@ const floatingIcon = props => {
       onPress={() => props.navigation.navigate("Create word")}
       style={styles.TouchableOpacityStyle}
     >
-      <Icon name="plus" size={50} color="white" />
+      <Animatable.View animation="pulse" iterationCount="infinite" direction="alternate">
+        <Icon name="plus" size={50} color="white" />
+      </Animatable.View>
     </TouchableOpacity>
   );
 };
@@ -35,12 +32,6 @@ const styles = StyleSheet.create({
     bottom: 30,
     backgroundColor: colors.buttonBlue,
     borderRadius: 100
-  },
-
-  FloatingButtonStyle: {
-    resizeMode: "contain",
-    width: 50,
-    height: 50
   }
 });
 

@@ -1,6 +1,7 @@
 import Toast from "react-native-simple-toast";
 import realm from "../index";
 import initWords from "../data/initWords";
+import { addWordCount } from "./statsService";
 
 export const getNextIdToUse = () => {
   const userWords = getUserWords();
@@ -62,8 +63,13 @@ export const getUserWords = () => {
 
 export const getAllWords = () => {
   const userWords = getUserWords();
-  const initWords = getInitWords();
-  return [...userWords, ...initWords];
+  const initWordsSaved = getInitWords();
+  return [...userWords, ...initWordsSaved];
+};
+
+export const getAllWordsMemorizedNumber = () => {
+  const allWords = getAllWords();
+  return allWords.filter(word => word.memorized).length;
 };
 
 export const getFilteredWordList = (word, favorite) => {
@@ -112,10 +118,11 @@ export const findWordByText = input => {
   const userWords = getUserWords()
     .filtered(`spanish CONTAINS[c] "${input}"`)
     .sorted("spanish", false);
-  const initWordss = getInitWords()
+  const initWordsSaved = getInitWords()
     .filtered(`spanish CONTAINS[c] "${input}"`)
     .sorted("spanish", false);
-  if (input.length > 1) return [...userWords, ...initWordss];
+  if (input.length > 1) return [...userWords, ...initWordsSaved];
+  return null;
 };
 
 export const getPlayWords = () => {
@@ -133,7 +140,7 @@ export const getPlayWords = () => {
     }
   }
 
-  if (memorisedWords) {
+  if (memorisedWords.length > 0) {
     for (let k = 0; k < 3; k += 1) {
       const randomPosition = Math.floor(Math.random() * memorisedWords.length);
       if (memorisedWords[randomPosition]) playWords.push(memorisedWords[randomPosition]);
@@ -144,12 +151,15 @@ export const getPlayWords = () => {
 };
 
 export const updateWordStreak = (word, isCorrect) => {
+  addWordCount(isCorrect);
   const streakLetter = isCorrect ? "c" : "w";
   const streak = `${word.streak}${streakLetter}`;
   let markAsMemorized = false;
   if (streak.length >= 5 && streak.substr(streak.length - 5) === "ccccc") {
     markAsMemorized = true;
-    Toast.show("Word completed", Toast.LONG, ["UIAlertController"]);
+    if (!word.memorized) {
+      Toast.show("Word completed", Toast.LONG, ["UIAlertController"]);
+    }
   }
 
   realm.write(() => {
@@ -159,6 +169,7 @@ export const updateWordStreak = (word, isCorrect) => {
 
 export const switchFavorite = word => {
   realm.write(() => {
+    // eslint-disable-next-line no-param-reassign
     word.favorite = !word.favorite;
   });
 };

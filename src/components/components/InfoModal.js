@@ -28,6 +28,9 @@ const renderModal = (isVisible, switchVisible) => {
 
 const infoModal = props => {
   const { show, switchVisible, theme } = props;
+
+  if (!show) return null;
+
   const text = `Hit Play, and you will be shown a word randomly chosen between the next 20 that haven't been completed.
 
 Guess the word correctly 5 times in a row and it will be marked as complete, and new words will appear.

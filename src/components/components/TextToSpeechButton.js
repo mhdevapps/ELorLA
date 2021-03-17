@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native";
+import * as Animatable from "react-native-animatable";
 import Tts from "react-native-tts";
 import Icon from "react-native-vector-icons/AntDesign";
 import colours from "../../themes/colours";
@@ -42,8 +43,10 @@ const textToSpeechButton = props => {
   Tts.setDucking(true); // lowers other sounds on the phone
   Tts.setDefaultVoice("es-es-x-ana-local");
 
+  let isPlaying = false;
   let iconColour = colours.gray;
   if (audioStatus === playing || audioStatus === slow) {
+    isPlaying = true;
     iconColour = colours.buttonBlue;
   }
 
@@ -67,7 +70,14 @@ const textToSpeechButton = props => {
         Tts.setDefaultRate(0.4, true).then(() => Tts.speak(word || ""));
       }}
     >
-      <Icon name="sound" size={iconSize || 30} color={iconColour} />
+      <Animatable.View
+        animation={isPlaying ? "pulse" : ""}
+        duration={500}
+        easing="ease-out"
+        iterationCount={isPlaying ? "infinite" : 1}
+      >
+        <Icon name="sound" size={iconSize || 30} color={iconColour} />
+      </Animatable.View>
     </TouchableOpacity>
   );
 };

@@ -32,11 +32,13 @@ const renderStreak = (streak, bgColor, keyId) => {
       <View
         key={k}
         style={{
-          height: 5,
-          width: 8,
-          marginLeft: 4,
+          height: 7,
+          width: 10,
+          marginLeft: 5,
           backgroundColor: st[k] === "w" ? colours.red : colours.greenDark,
-          borderRadius: 1
+          borderRadius: 0,
+          borderTopLeftRadius: 2,
+          borderTopRightRadius: 2
         }}
       />
     );
@@ -82,7 +84,11 @@ const renderIcons = (isFavorite, isUser) => {
 
 const renderSeparatorCounter = index => {
   const { colors, isDark } = useTheme();
-  if (index !== 0 && (index + 1) % 10 === 0) {
+  let useSeparator = (index + 1) % 10 === 0 && index !== 0;
+  if ((index + 1) % 50 === 0) useSeparator = false;
+  else if (index % 50 === 0) useSeparator = true;
+
+  if (useSeparator) {
     return (
       <View
         style={{
@@ -141,13 +147,15 @@ const wordMainCard = props => {
             marginVertical: 5,
             borderRadius: 7,
             padding: 5,
-            justifyContent: "center"
+            justifyContent: "center",
+            borderLeftColor: word.art === "El" ? colors.buttonBlue : colors.pink,
+            borderLeftWidth: 4
           }}
         >
-          <View style={{ flexDirection: "row", marginLeft: 10 }}>
-            <View key="word" style={{ width: "40%" }}>
+          <View style={{ flexDirection: "row", marginLeft: 0 }}>
+            <View key="word" style={{ width: "40%", flexDirection: "row" }}>
               <Text style={{ color: colors.textBlack }}>
-                {word.art} {word.spanish}
+                {` ${word.art} ${word.spanish}`}
               </Text>
             </View>
             <View
@@ -166,7 +174,7 @@ const wordMainCard = props => {
           {word.comment !== "" && (
             <Text
               style={{
-                marginLeft: 10,
+                marginLeft: 7,
                 borderTopWidth: 1,
                 borderColor: isDark ? colors.background : colors.gray,
                 color: isDark ? colors.background : colors.grayDark

@@ -1,10 +1,13 @@
 import realm from "../index";
 
 const userTableName = "UserInfo";
+const statsTableName = "Stats";
 
 export const createUserInfo = () => {
+  // eslint-disable-next-line no-console
+  console.log(`Realm is located at: ${realm.path}`);
+
   const userInfo = getUserInfo();
-  console.log("uu", userInfo);
   if (!userInfo || userInfo.length < 1) {
     realm.write(() => {
       realm.create(userTableName, {

@@ -20,7 +20,7 @@ export default (Toggle = () => {
   };
 
   return (
-    <View style={{ alignContent: "center", alignItems: "center" }}>
+    <View style={{ alignContent: "center", alignItems: "center", padding: 17 }}>
       <View
         style={{
           alignContent: "center",

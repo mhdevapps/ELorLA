@@ -8,6 +8,9 @@ import { getUserInfo, changeWebViewPreference } from "../../db/services/userServ
 
 const SettingsModal = props => {
   const { show, switchVisible, theme } = props;
+
+  if (!show) return null;
+
   const userInfo = getUserInfo();
   const [settingsChanged, setSettingsChanged] = useState(false);
 
@@ -24,9 +27,7 @@ const SettingsModal = props => {
     >
       <View
         style={{
-          backgroundColor: theme.isDark
-            ? theme.colors.background
-            : theme.colors.background,
+          backgroundColor: theme.colors.background,
           paddingTop: 20,
           paddingHorizontal: 20,
           width: "90%",

@@ -467,7 +467,7 @@ const InitWords = [
     id: 58,
     art: "El",
     spanish: "movimiento",
-    english: "movement, motion",
+    english: "movement",
     comment: "",
     random: 413
   },
@@ -635,7 +635,7 @@ const InitWords = [
     id: 79,
     art: "El",
     spanish: "cuadro",
-    english: "picture, painting",
+    english: "frame, painting",
     comment: "",
     random: 397
   },
@@ -777,9 +777,9 @@ const InitWords = [
   },
   {
     id: 97,
-    art: "El",
-    spanish: "mayo",
-    english: "May",
+    art: "La",
+    spanish: "máscara",
+    english: "mask",
     comment: "",
     random: 299
   },
@@ -852,7 +852,7 @@ const InitWords = [
     art: "El",
     spanish: "dedo",
     english: "finger, toe",
-    comment: "",
+    comment: "Dedo de la mano, dedo del pie",
     random: 272
   },
   {
@@ -883,7 +883,7 @@ const InitWords = [
     id: 110,
     art: "El",
     spanish: "pensamiento",
-    english: "though",
+    english: "thought",
     comment: "",
     random: 734
   },
@@ -930,8 +930,8 @@ const InitWords = [
   {
     id: 116,
     art: "El",
-    spanish: "julio",
-    english: "July",
+    spanish: "pantano",
+    english: "lake",
     comment: "",
     random: 924
   },
@@ -962,8 +962,8 @@ const InitWords = [
   {
     id: 120,
     art: "El",
-    spanish: "noviembre",
-    english: "November",
+    spanish: "reloj",
+    english: "clock",
     comment: "",
     random: 410
   },
@@ -971,7 +971,7 @@ const InitWords = [
     id: 121,
     art: "El",
     spanish: "país",
-    english: "country, nation",
+    english: "country",
     comment: "",
     random: 145
   },
@@ -994,8 +994,8 @@ const InitWords = [
   {
     id: 124,
     art: "El",
-    spanish: "don",
-    english: "gift, talent",
+    spanish: "talento",
+    english: "talent",
     comment: "",
     random: 388
   },
@@ -1091,7 +1091,7 @@ const InitWords = [
     id: 136,
     art: "El",
     spanish: "frente",
-    english: "the front",
+    english: "front",
     comment: "",
     random: 421
   },
@@ -1105,9 +1105,9 @@ const InitWords = [
   },
   {
     id: 138,
-    art: "El",
-    spanish: "viaje",
-    english: "travel",
+    art: "La",
+    spanish: "luna",
+    english: "Moon",
     comment: "",
     random: 945
   },
@@ -1145,17 +1145,17 @@ const InitWords = [
   },
   {
     id: 143,
-    art: "El",
-    spanish: "diciembre",
-    english: "December",
+    art: "La",
+    spanish: "lámpara",
+    english: "lamp",
     comment: "",
     random: 150
   },
   {
     id: 144,
     art: "El",
-    spanish: "diez",
-    english: "ten",
+    spanish: "virus",
+    english: "virus",
     comment: "",
     random: 799
   },
@@ -1217,9 +1217,9 @@ const InitWords = [
   },
   {
     id: 152,
-    art: "El",
-    spanish: "junio",
-    english: "June",
+    art: "La",
+    spanish: "dieta",
+    english: "diet",
     comment: "",
     random: 598
   },
@@ -1234,9 +1234,10 @@ const InitWords = [
   {
     id: 154,
     art: "El",
-    spanish: "cinco",
-    english: "five",
-    comment: "",
+    spanish: "billón",
+    english: "trillion",
+    comment:
+      "Yes, billón is 1.000.000.000.000, unlike the English billion: 1.000.000.000",
     random: 850
   },
   {
@@ -1281,9 +1282,9 @@ const InitWords = [
   },
   {
     id: 160,
-    art: "El",
-    spanish: "nunca",
-    english: "never",
+    art: "La",
+    spanish: "sandía",
+    english: "watermelon",
     comment: "",
     random: 916
   },
@@ -1331,7 +1332,7 @@ const InitWords = [
     id: 166,
     art: "La",
     spanish: "carta",
-    english: "letter",
+    english: "letter (mail)",
     comment: "",
     random: 910
   },
@@ -1372,7 +1373,7 @@ const InitWords = [
     art: "El",
     spanish: "septiembre",
     english: "September",
-    comment: "",
+    comment: "The month of September",
     random: 779
   },
   {
@@ -1395,7 +1396,7 @@ const InitWords = [
     id: 174,
     art: "El",
     spanish: "modo",
-    english: "way, manner",
+    english: "way, mode",
     comment: "",
     random: 836
   },
@@ -1507,7 +1508,7 @@ const InitWords = [
     id: 188,
     art: "La",
     spanish: "figura",
-    english: "to figure",
+    english: "figure",
     comment: "",
     random: 183
   },
@@ -1523,7 +1524,7 @@ const InitWords = [
     id: 190,
     art: "La",
     spanish: "cuenta",
-    english: "count",
+    english: "account",
     comment: "",
     random: 575
   },
@@ -1539,7 +1540,7 @@ const InitWords = [
     id: 192,
     art: "El",
     spanish: "uso",
-    english: "use",
+    english: "usage",
     comment: "",
     random: 589
   },
@@ -1547,7 +1548,7 @@ const InitWords = [
     id: 193,
     art: "El",
     spanish: "juego",
-    english: "game, playing",
+    english: "game",
     comment: "",
     random: 755
   },
@@ -1620,7 +1621,7 @@ const InitWords = [
     art: "La",
     spanish: "letra",
     english: "letter",
-    comment: "",
+    comment: "a b c d...",
     random: 543
   },
   {
@@ -1707,7 +1708,7 @@ const InitWords = [
     id: 213,
     art: "La",
     spanish: "petición",
-    english: "The request",
+    english: "request",
     comment: "",
     random: 759
   },

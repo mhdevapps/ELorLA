@@ -9,8 +9,9 @@ import {
 import Icon from "react-native-vector-icons/Octicons";
 import IconFontisto from "react-native-vector-icons/Fontisto";
 import IonIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Animatable from "react-native-animatable";
 import TextToSpeechButton from "../components/TextToSpeechButton";
-
+import StreakBanner from "../components/StreakBanner";
 import {
   getPlayWords,
   updateWordStreak,
@@ -48,9 +49,12 @@ const PlayScene = () => {
   let wordToShow = null;
   useEffect(() => {
     const words = getPlayWords();
+
     wordToShow = words[parseInt(Math.random() * words.length, 10)];
-    if (wordToShow.word === wordInfo.lastWord) {
+    let isWordRepeated = wordToShow.spanish === wordInfo.lastWord?.wordToShow.spanish;
+    while (isWordRepeated) {
       wordToShow = words[parseInt(Math.random() * words.length, 10)];
+      isWordRepeated = wordToShow.spanish === wordInfo.lastWord?.wordToShow.spanish;
     }
 
     onChangeWordInfo({
@@ -81,7 +85,8 @@ const PlayScene = () => {
     onChangeWordInfo({
       wordToShow: null,
       showArticle: false,
-      correctAnswer: null
+      correctAnswer: null,
+      lastWord: wordInfo
     });
     onChangeGetNextWord(!getNextWord);
     onChangeReplied(false);
@@ -95,12 +100,7 @@ const PlayScene = () => {
   const renderButtons = () => {
     return !replied && wordInfo.wordToShow ? (
       <View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly"
-          }}
-        >
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
           <View style={{ flex: 1 }}>
             <CustomButton
               titleColor={colors.text}
@@ -124,7 +124,13 @@ const PlayScene = () => {
         </View>
       </View>
     ) : (
-      <View style={{ paddingBottom: 0 }}>
+      <Animatable.View
+        animation="pulse"
+        duration={1000}
+        easing="ease-in-out-sine"
+        iterationCount="infinite"
+        style={{ paddingBottom: 0 }}
+      >
         <CustomButton
           big
           title="NEXT"
@@ -133,28 +139,24 @@ const PlayScene = () => {
           }}
           loading={!wordInfo.wordToShow}
         />
-      </View>
+      </Animatable.View>
     );
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        backgroundColor: colors.background
-      }}
-    >
+    <View style={{ flex: 1, paddingHorizontal: 20, backgroundColor: colors.background }}>
+      <StreakBanner />
       <ScrollView style={{ flex: 1 }}>
         {wordInfo.wordToShow ? (
           <WordPlayCard word={wordInfo.wordToShow} wordInfo={wordInfo} />
         ) : (
-          <ActivityIndicator size="large" />
+          <View style={{ paddingTop: 30 }}>
+            <ActivityIndicator color={colors.gray} size="large" />
+          </View>
         )}
       </ScrollView>
-
       <View
+        animation="zoomInUp"
         style={{
           width: "100%",
           flexDirection: "row",
