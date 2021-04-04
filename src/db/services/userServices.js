@@ -27,3 +27,12 @@ export const changeWebViewPreference = () => {
     });
   }
 };
+
+export const changeShowPersonalisedAds = () => {
+  const userInfo = getUserInfo();
+  if (userInfo) {
+    realm.write(() => {
+      userInfo.onlyNonPersonalisedAds = !userInfo.onlyNonPersonalisedAds;
+    });
+  }
+};

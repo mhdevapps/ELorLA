@@ -5,6 +5,8 @@ import { editWord, addUserWord, deleteOrHideWord } from "../../db/services/words
 import AddWordsCard from "../components/AddWordsCards";
 import { useTheme } from "../../themes/ThemeProvider";
 import { ARTICLE_EL } from "../../constants";
+import { renderRectangleBanner } from "../../helpers/adsHelper";
+import { ScrollView } from "react-native-gesture-handler";
 
 const CreateWordScene = props => {
   const { params } = props.route;
@@ -68,11 +70,11 @@ const CreateWordScene = props => {
   };
 
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingTop: 10,
         backgroundColor: colors.background
       }}
     >
@@ -97,7 +99,7 @@ const CreateWordScene = props => {
         </View>
       </View>
       <View style={{ width: "100%" }}>
-        <View style={{ paddingTop: 10, paddingHorizontal: 20 }}>
+        <View style={{ paddingTop: 10, paddingHorizontal: 20, paddingBottom: 20 }}>
           <Button
             onPress={() => saveWord()}
             title={params ? "EDIT" : "Save word"}
@@ -106,7 +108,9 @@ const CreateWordScene = props => {
           />
         </View>
       </View>
-    </View>
+      {renderRectangleBanner()}
+      <View style={{ height: 20 }} />
+    </ScrollView>
   );
 };
 

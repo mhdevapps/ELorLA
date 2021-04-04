@@ -6,5 +6,5 @@ import stats from "./model/statsModel";
 
 export default new Realm({
   schema: [words, userWords, userInfo, stats],
-  schemaVersion: 14
+  schemaVersion: 17
 });

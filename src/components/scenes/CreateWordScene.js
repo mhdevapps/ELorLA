@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, View } from "react-native";
+import { Button, View, ScrollView } from "react-native";
 import Toast from "react-native-simple-toast";
 import { addUserWord } from "../../db/services/wordsServices";
 import AddWordsCard from "../components/AddWordsCards";
 import { useTheme } from "../../themes/ThemeProvider";
 import { ARTICLE_EL } from "../../constants";
+import { adTypes, adIds, renderRectangleBanner } from "../../helpers/adsHelper";
 
 const CreateWordScene = props => {
   const wordInit = {
@@ -26,7 +27,7 @@ const CreateWordScene = props => {
   };
 
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         paddingHorizontal: 20,
@@ -43,7 +44,13 @@ const CreateWordScene = props => {
           setWordsFound={setWordsFound}
         />
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          paddingBottom: 25
+        }}
+      >
         <View style={{ width: "40%", margin: 10 }}>
           <Button
             onPress={() => props.navigation.goBack()}
@@ -60,7 +67,9 @@ const CreateWordScene = props => {
           />
         </View>
       </View>
-    </View>
+      {renderRectangleBanner()}
+      <View style={{ height: 20 }} />
+    </ScrollView>
   );
 };
 

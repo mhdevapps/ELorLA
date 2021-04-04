@@ -8,9 +8,9 @@ import OctIcon from "react-native-vector-icons/Octicons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "../../themes/ThemeProvider";
 import colours from "../../themes/colours";
+import { switchFavorite } from "../../db/services/wordsServices";
 
-const showSettings = word => {
-  const { colors, isDark } = useTheme();
+const showSettings = (word, textColor) => {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +19,7 @@ const showSettings = word => {
       style={{ flex: 1, justifyContent: "center", padding: 4 }}
       onPress={() => navigation.navigate("Edit word", word)}
     >
-      <Icon name="pencil" size={15} color={colors.textBlack} />
+      <Icon name="pencil" size={15} color={textColor} />
     </TouchableOpacity>
   );
 };
@@ -61,29 +61,34 @@ const renderStreak = (streak, bgColor, keyId) => {
   );
 };
 
-const renderIcons = (isFavorite, isUser) => {
-  const { colors, isDark } = useTheme();
+const renderIcons = (word, colors, isDark) => {
+  const starColor = word.favorite ? colors.orange : colors.grayDark;
+
   return (
     <View
       key="icon"
       style={{ flexDirection: "row", justifyContent: "flex-end", width: 40 }}
     >
-      {isFavorite && (
-        <View key="star" style={{ justifyContent: "center", padding: 4 }}>
-          <OctIcon name="star" size={14} color={"orange"} />
-        </View>
-      )}
-      {isUser && (
+      {word.userWord && (
         <View key="person" style={{ justifyContent: "center", padding: 4 }}>
-          <OctIcon name="person" size={14} color={colors.buttonBlue} />
+          <OctIcon name="person" size={13} color={colors.buttonBlue} />
         </View>
       )}
+      <View key="star" style={{ justifyContent: "center", paddingHorizontal: 6 }}>
+        <TouchableOpacity
+          onPress={() => {
+            switchFavorite(word);
+          }}
+          style={{ justifyContent: "center" }}
+        >
+          <OctIcon name="star" size={17} color={starColor} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-const renderSeparatorCounter = index => {
-  const { colors, isDark } = useTheme();
+const renderSeparatorCounter = (index, colors, isDark) => {
   let useSeparator = (index + 1) % 10 === 0 && index !== 0;
   if ((index + 1) % 50 === 0) useSeparator = false;
   else if (index % 50 === 0) useSeparator = true;
@@ -112,8 +117,7 @@ const renderSeparatorCounter = index => {
             textAlign: "center"
           }}
         >
-          {" "}
-          {index + 1}{" "}
+          {` ${index + 1} `}
         </Text>
         <View
           style={{
@@ -135,10 +139,12 @@ const wordMainCard = props => {
   let bgColor = index % 2 === 0 ? colors.white : colors.grayLight;
   if (isDark) bgColor = index % 2 === 0 ? colors.gray : colors.grayLight;
   // bgColor = getColorByArticle(props.word.art);
+  // const word = getInitOrUserWordById(props.word.userWord, props.word.id);
+
   try {
     return (
       <View>
-        {renderSeparatorCounter(index)}
+        {renderSeparatorCounter(index, colors, isDark)}
         <View
           key={index}
           style={{
@@ -168,8 +174,8 @@ const wordMainCard = props => {
             >
               <Text>{word.english}</Text>
             </View>
-            {renderIcons(word.favorite, word.userWord)}
-            {!hideSettings && showSettings(word)}
+            {renderIcons(word, colors, isDark)}
+            {!hideSettings && showSettings(word, colors.textBlack)}
           </View>
           {word.comment !== "" && (
             <Text

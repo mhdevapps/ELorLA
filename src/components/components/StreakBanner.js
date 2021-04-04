@@ -20,7 +20,7 @@ const streakBanner = () => {
         </Text>
       </View>
       <View style={styles.item}>
-        <Text style={styles.text}>{`Total streak: ${totalStreak}`}</Text>
+        <Text style={styles.text}>{`Best streak: ${totalStreak}`}</Text>
       </View>
     </Animatable.View>
   );

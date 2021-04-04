@@ -74,7 +74,7 @@ const SettingsModal = props => {
             <Text style={styles.numbers}>{stats.currentStreak}</Text>
           </View>
           <View style={styles.itemView}>
-            <Text style={styles.description}>Total streak: </Text>
+            <Text style={styles.description}>Best streak: </Text>
             <Text style={styles.numbers}>{stats.totalStreak}</Text>
           </View>
           <View style={styles.itemView}>
@@ -93,7 +93,7 @@ const SettingsModal = props => {
             <Text style={styles.description}>Ratio: </Text>
             <Text style={styles.numbers}>{`${ratioCorrectWords}%`}</Text>
           </View>
-          <View style={{ paddingHorizontal: "25%", paddingVertical: "25%" }}>
+          <View style={{ paddingHorizontal: "25%", paddingVertical: 25 }}>
             <Button
               onPress={() => resetStatsAlert()}
               title="Reset stats"

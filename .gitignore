@@ -80,3 +80,5 @@ android/app/src/main/res/drawable-mdpi/node_modules_reactnavigation_stack_src_vi
 android/app/src/main/res/drawable-xhdpi/node_modules_reactnavigation_stack_src_views_assets_backicon.png
 android/app/src/main/res/drawable-xxhdpi/node_modules_reactnavigation_stack_src_views_assets_backicon.png
 android/app/src/main/res/drawable-xxxhdpi/node_modules_reactnavigation_stack_src_views_assets_backicon.png
+android/java_pid*
+android/keystore.jks

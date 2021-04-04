@@ -1,3 +1,5 @@
+/* eslint-disable no-tabs */
+/* eslint-disable max-len */
 import React from "react";
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
@@ -18,43 +20,44 @@ import { useTheme } from "../../themes/ThemeProvider";
 import colours from "../../themes/colours";
 
 // class WordListScene extends React.Component {
-const WordListScene = () => {
-  /* constructor(props) {
+/* constructor(props) {
    super(props);
 		this.state = { words: null, wordFilter: '', favoriteFilter: false };
 		realm.addListener('change', () => {
 			this.getWords();
 		});
 	}
-	
-	componentDidMount() {
-		// this.getWords();
-	} 
-	*/
 
+	componentDidMount() {
+		this.getWords();
+	} */
+
+const WordListScene = () => {
   const navigation = useNavigation();
   const [favoriteFilter, setFavoriteFilter] = React.useState(false);
   const [wordFilter, setWordFilter] = React.useState("");
   const [wordsLoaded, setWordsLoaded] = React.useState(false);
-  const [pages, setPages] = React.useState({ current: 1, total: 11 });
+  const [pages, setPages] = React.useState({ current: 1, total: 10 });
   const [wordList, setWordList] = React.useState([]);
   const { colors } = useTheme();
   const flatlistRef = React.useRef();
 
-  React.useEffect(() => {
-    getWords(true);
-    realm.addListener("change", () => {
-      getWords();
-    });
-
-    return () => {
-      // willUnmount
-      realm.removeAllListeners();
-    };
-  }, []);
+  const getWordsListener = React.useCallback(() => {
+    // useCallback will return a memoized version of the callback that only changes if one of the inputs in [] has changed
+    getWords(true, "updateButRemainInSamePage");
+  }, [wordFilter, favoriteFilter]);
 
   React.useEffect(() => {
-    setPages({ current: 1, total: 1 });
+    /**  Like ComponentDidMount
+     *  Gets the initial words. Then if there is a word changed/deleted, it refreshes them, but it would call getWords()
+     *  with the same values always, because it is a copy of when it was first createdso it has no access to the current state.
+     *  That is why I used the useCallback in getWordsListener, so when its [wordFilter, favoriteFilter] changes, it is updated, and the listener function with it
+     */
+    realm.addListener("change", getWordsListener);
+    return () => realm.removeAllListeners(); // willUnmount
+  }, [getWordsListener]);
+
+  React.useEffect(() => {
     getWords(true);
   }, [favoriteFilter, wordFilter]);
 
@@ -62,17 +65,24 @@ const WordListScene = () => {
     // this.props.simpleAction();
   };
 
-  const getWords = filtersApplied => {
-    console.log("getWors");
+  const getWords = (filtersApplied, updateButRemainInSamePage) => {
     let words = null;
-    if (wordFilter === "" && !favoriteFilter) words = getAllWords();
-    else words = getFilteredWordList(wordFilter, favoriteFilter);
+    if (wordFilter !== "" || favoriteFilter) {
+      words = getFilteredWordList(wordFilter, favoriteFilter);
+    } else {
+      words = getAllWords();
+    }
 
     const totalPages = parseInt(words.length / 50 + 1, 10);
     const currentPage = totalPages > pages.current ? 1 : pages.current;
 
-    if (filtersApplied) setPages({ current: 1, total: totalPages });
-    else setPages({ current: currentPage, total: totalPages });
+    if (updateButRemainInSamePage) {
+      // do nothing
+    } else if (filtersApplied) {
+      setPages({ current: 1, total: totalPages });
+    } else {
+      setPages({ current: currentPage, total: totalPages });
+    }
 
     const wordsByPage = Array.from({ length: totalPages + 1 }, () => []);
     let page = 1;
@@ -91,7 +101,7 @@ const WordListScene = () => {
   const renderWords = () => {
     const words = wordList[pages.current];
 
-    return words.length > 0 ? (
+    return words?.length > 0 ? (
       <Animatable.View animation="fadeIn" duration={500} style={{ flex: 1 }}>
         <FlatList
           ref={flatlistRef}
@@ -123,7 +133,11 @@ const WordListScene = () => {
     } else {
       setPages({ ...pages, current: pages.current <= 1 ? 1 : pages.current - 1 });
     }
-    flatlistRef.current.scrollToIndex({ index: 0 });
+    try {
+      flatlistRef.current.scrollToIndex({ index: 0 });
+    } catch (e) {
+      console.log("error scroll", e);
+    }
   };
 
   return (
@@ -154,19 +168,27 @@ const WordListScene = () => {
             style={styles.buttonPagination}
             onPress={() => changePage(false)}
           >
-            <Icon name="arrow-left" size={20} color={colors.textBlack} />
+            <Icon
+              name="arrow-left"
+              size={20}
+              color={pages.current === 1 ? colours.grayDark : colours.black}
+            />
           </TouchableOpacity>
-          <TouchableOpacity style={{ backgroundColor: colors.grayLight, minWidth: 70 }}>
+          <View style={{ backgroundColor: colors.grayLight, minWidth: 70 }}>
             <Text style={styles.paginationCount}>
               {`${pages.current}/${pages.total}`}
             </Text>
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity
             disabled={pages.current === pages.total}
             style={styles.buttonPagination}
             onPress={() => changePage(true)}
           >
-            <Icon name="arrow-right" size={20} color={colors.textBlack} />
+            <Icon
+              name="arrow-right"
+              size={20}
+              color={pages.current === pages.total ? colours.grayDark : colours.black}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -196,7 +218,7 @@ const styles = {
     overflow: "hidden",
     backgroundColor: colours.el,
     borderColor: colours.gray,
-    borderWidth: 2
+    borderWidth: 1
   },
   paginationContainer: {
     width: "100%",

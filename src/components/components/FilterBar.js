@@ -5,27 +5,31 @@ import styles from "../../themes/styles";
 import colours from "../../themes/colours";
 import { useTheme } from "../../themes/ThemeProvider";
 
-const FilterBar = props => {
+const FilterBar = ({ favoriteFilter, updateFavorite, updateWord }) => {
   const { colors } = useTheme();
-  const { favoriteFilter } = props;
+
   return (
     <View style={{ flexDirection: "row", paddingTop: 10 }}>
-      <View style={{ width: "80%" }}>
+      <View style={{ flex: 1 }}>
         <TextInput
           style={{ ...styles.textInput, color: colors.text }}
-          onChangeText={text => {
-            props.updateWord(text);
-          }}
-          placeholder={"Search word"}
+          onChangeText={text => updateWord(text)}
+          placeholder="Search word"
           placeholderTextColor={colors.grayDark}
         />
       </View>
-      <View style={{ width: "20%" }}>
+      <View style={{ paddingLeft: 20 }}>
         <TouchableOpacity
           style={{ alignItems: "center" }}
-          onPress={() => props.updateFavorite(!props.favoriteFilter)}
+          onPress={() => {
+            updateFavorite(!favoriteFilter);
+          }}
         >
-          <Icon name="star" size={35} color={favoriteFilter ? "orange" : colours.gray} />
+          <Icon
+            name="star"
+            size={35}
+            color={favoriteFilter ? colours.orange : colours.gray}
+          />
         </TouchableOpacity>
       </View>
     </View>

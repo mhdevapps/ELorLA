@@ -82,8 +82,8 @@ const InitWords = [
   {
     id: 10,
     art: "El",
-    spanish: "azul",
-    english: "blue",
+    spanish: "llavero",
+    english: "key chain",
     comment: "",
     random: 493
   },
@@ -219,7 +219,7 @@ const InitWords = [
     id: 27,
     art: "La",
     spanish: "comunidad",
-    english: "comunity",
+    english: "community",
     comment: "",
     random: 157
   },
@@ -2837,7 +2837,7 @@ const InitWords = [
     id: 354,
     art: "El",
     spanish: "llamada",
-    english: "the call",
+    english: "call",
     comment: "",
     random: 63
   },
@@ -2941,7 +2941,7 @@ const InitWords = [
     id: 367,
     art: "La",
     spanish: "noticia",
-    english: "the news",
+    english: "news",
     comment: "",
     random: 287
   },

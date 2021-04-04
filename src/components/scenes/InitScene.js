@@ -1,7 +1,10 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, Alert, Linking } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { connect } from "react-redux";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import OctIcon from "react-native-vector-icons/Octicons";
 import { useNavigation } from "@react-navigation/native";
@@ -14,41 +17,9 @@ import InfoModal from "../components/InfoModal";
 import SettingsModal from "../components/SettingsModal";
 import ProfileModal from "../components/ProfileModal";
 import ThemeSwitch from "../components/ThemeSwitch";
-import colours from "../../themes/colours";
-import packageJson from "../../../package.json";
 import { useTheme } from "../../themes/ThemeProvider";
 import { createStats } from "../../db/services/statsService";
-
-const rateApp = () => {
-  return (
-    <TouchableOpacity
-      key="sett"
-      style={{ position: "absolute", top: 5, right: 5 }}
-      onPress={() => {
-        Alert.alert(
-          "Rate the app",
-          `This opens the store so that you can review the app. Give your feedback and help with the improvement and visibility of ELorLA.\nThank you!`,
-          [
-            {
-              text: "Cancel",
-              style: "cancel"
-            },
-            {
-              text: "Rate",
-              onPress: () => {
-                Linking.openURL(
-                  "https://play.google.com/store/apps/details?id=com.elorla"
-                );
-              }
-            }
-          ]
-        );
-      }}
-    >
-      <MaterialIcon name="rate-review" size={30} color={colours.green} />
-    </TouchableOpacity>
-  );
-};
+import MediaButtons from "../components/HomeMediaButtons";
 
 const InitScene = () => {
   const navigation = useNavigation();
@@ -67,11 +38,7 @@ const InitScene = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <View style={{ position: "absolute", top: 5, left: 5 }}>
-        <Text style={{ fontSize: 11, color: colors.grayDark }}>
-          {`v-${packageJson.version}.`}
-        </Text>
-      </View>
+      <MediaButtons />
       <ScrollView style={{ flex: 1, paddingTop: "33%", padding: 20 }}>
         <View style={{ overflow: "hidden" }}>
           <Animatable.Text
@@ -82,7 +49,7 @@ const InitScene = () => {
               color: isDark ? colors.white : colors.text
             }}
           >
-            EL or LA
+            ELorLA
           </Animatable.Text>
         </View>
         <Animatable.View
@@ -198,7 +165,6 @@ const InitScene = () => {
           setshowProfile(show);
         }}
       />
-      {rateApp()}
     </View>
   );
 };

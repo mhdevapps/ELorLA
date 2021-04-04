@@ -1,6 +1,6 @@
 {
   "name": "elorla",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "version:patch": "npm version patch -m \"Upgrade to %s\"",
@@ -18,6 +18,8 @@
     "@react-native-community/masked-view": "0.1.6",
     "@react-native-community/picker": "^1.8.1",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
+    "@react-native-firebase/admob": "^11.1.2",
+    "@react-native-firebase/app": "^11.1.2",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
     "expo": "~37.0.3",

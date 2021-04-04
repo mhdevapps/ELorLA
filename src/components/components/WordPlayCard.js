@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import * as Animatable from "react-native-animatable";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import colours from "../../themes/colours";
 import { useTheme } from "../../themes/ThemeProvider";
 
@@ -43,51 +44,40 @@ const renderStreak = (streak, isLast) => {
   );
 };
 
-const wordMainCard = props => {
-  const { colors, isDark } = useTheme();
-
-  let textColor = colors.text;
+const wordMainCard = ({ word, wordInfo }) => {
+  const { colors } = useTheme();
+  let color = colors.text;
   let animation = "";
-  if (props.wordInfo.showArticle) {
-    if (props.wordInfo.correctAnswer) {
-      textColor = colors.green;
+  if (wordInfo.showArticle) {
+    if (wordInfo.correctAnswer) {
+      color = colors.green;
       animation = "pulse";
     } else {
-      textColor = colors.red;
+      color = colors.red;
       animation = "swing";
     }
   }
 
   return (
-    <Animatable.View animation="fadeIn" duration={666} style={{ padding: 5 }}>
+    <Animatable.View animation="fadeIn" duration={666}>
       <View style={styles.wordsView}>
         <Animatable.Text
           duration={500}
           animation={animation}
-          style={{
-            fontSize: 30,
-            textAlign: "center",
-            fontWeight: "bold",
-            color: textColor
-          }}
+          style={{ fontSize: 30, textAlign: "center", fontWeight: "bold", color }}
         >
-          {`${props.wordInfo.showArticle ? props.word.art : "__"} ${props.word.spanish}`}
+          {`${wordInfo.showArticle ? word.art : "__"} ${word.spanish}`}
         </Animatable.Text>
-        <Text
-          style={{
-            fontSize: 25,
-            textAlign: "center",
-            color: colors.textSecondary
-          }}
-        >
-          {props.word.english}
+        <Text style={{ fontSize: 25, textAlign: "center", color: colors.textSecondary }}>
+          {word.english}
         </Text>
         <Text style={{ fontSize: 20, textAlign: "center", color: colors.textSecondary }}>
-          {props.word.comment}
+          {word.comment}
         </Text>
       </View>
       <View style={{ marginVertical: 5, alignItems: "center" }}>
-        {renderStreak(props.word.streak, props.wordInfo.showArticle)}
+        {renderStreak(word.streak, wordInfo.showArticle)}
+        {word.memorized && <Icon name="check" size={20} color={colors.green} />}
       </View>
     </Animatable.View>
   );
@@ -97,9 +87,7 @@ const styles = {
   wordsView: {
     marginVertical: 5,
     borderRadius: 10,
-    padding: 5,
-    flex: 1,
-    justifyContent: "center"
+    padding: 5
   }
 };
 

@@ -5,8 +5,7 @@ import { addWordCount } from "./statsService";
 
 export const getNextIdToUse = () => {
   const userWords = getUserWords();
-  if (userWords.length > 0) return userWords.sorted("id", true)[0].id + 1;
-  else return 1;
+  return userWords.length > 0 ? userWords.sorted("id", true)[0].id + 1 : 1;
 };
 
 export const createInitWords = () => {
@@ -59,6 +58,14 @@ export const getInitWords = () => {
 
 export const getUserWords = () => {
   return realm.objects("UserWords");
+};
+
+export const getInitOrUserWordById = (userWord, id) => {
+  const word = userWord
+    ? getUserWords().filtered(`id == ${id}`)[0]
+    : getInitWords().filtered(`id == ${id}`)[0];
+
+  return word;
 };
 
 export const getAllWords = () => {
@@ -125,8 +132,12 @@ export const findWordByText = input => {
   return null;
 };
 
-export const getPlayWords = () => {
-  const allWords = [...getUserWords(), ...getInitWords()];
+export const getPlayWords = filters => {
+  let allWords = [...getUserWords(), ...getInitWords()];
+  if (filters.onlyFavs) {
+    const favWords = allWords.filter(word => word.favorite && word);
+    if (favWords.length > 2) allWords = favWords;
+  }
   const playWords = [];
   const memorisedWords = [];
   let max = allWords.length;
@@ -167,9 +178,10 @@ export const updateWordStreak = (word, isCorrect) => {
   });
 };
 
-export const switchFavorite = word => {
+export const switchFavorite = wordProp => {
+  const word = getInitOrUserWordById(wordProp.userWord, wordProp.id);
+
   realm.write(() => {
-    // eslint-disable-next-line no-param-reassign
     word.favorite = !word.favorite;
   });
 };

@@ -26,6 +26,7 @@ const commonColors = {
 // Light theme colors
 export const lightColors = {
   background: "#eeeeee",
+  backgroundShadow: "#DDDDDD",
   text: "#121212",
   textSecondary: smoothBlack,
   ...commonColors
@@ -34,6 +35,7 @@ export const lightColors = {
 // Dark theme colors
 export const darkColors = {
   background: smoothBlack,
+  backgroundShadow: "#2A2A2A",
   text: "#f6f6f6",
   textSecondary: grayLight,
   ...commonColors
